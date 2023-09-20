@@ -3,3 +3,4 @@ use serenity::{
     model::{channel::Message, gateway::Ready},
     prelude::*,
 };
+struct Handler;
