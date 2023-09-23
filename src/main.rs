@@ -1,3 +1,4 @@
+// note to self, use rustup for rust version management
 use std::collections::HashSet;
 
 use serenity::{
