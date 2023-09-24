@@ -20,10 +20,9 @@ use songbird;
 pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
     let cmd_dat_opts: &[CommandDataOption] = &command.data.options;
     let cmd_dat_val = cmd_dat_opts.get(0).expect("error: getting URL").resolved.as_ref().expect("error: getting URL");
-    let url = if let CommandDataOptionValue::String(url) = cmd_dat_val {
-        url
-    } else {
-        return ();
+    let url = match cmd_dat_val {
+        CommandDataOptionValue::String(url) => url,
+        _ => return (),
     };
 
     let guild_id = command.guild_id.expect("error: getting guild ID");
