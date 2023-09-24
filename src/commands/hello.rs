@@ -9,7 +9,7 @@ use serenity::{
 use rand::seq::SliceRandom;
 
 pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
-    let mut test_var = vec!["HELLO!!!!!!!!!!", "WASSUP", "HI", "GREETINGS", "HAI DOMO"] ;
+    let test_var = vec!["HELLO!!!!!!!!!!", "WASSUP", "HI", "GREETINGS", "HAI DOMO"] ;
     if let Err(why) = command.create_interaction_response(
         &ctx,
         |r| {
