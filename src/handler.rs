@@ -60,6 +60,7 @@ impl EventHandler for Handler {
                         .create_application_command( joinvc::register)
                         .create_application_command(leavevc::register)
                         .create_application_command( playvc::register)
+                        .create_application_command(  hello::register)
         }).await;
         // Command::delete_global_application_command(&ctx.http, serenity::model::id::CommandId()).await.expect("error");
 
