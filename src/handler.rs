@@ -30,6 +30,7 @@ impl Handler {
                 "ping"    =>    ping::run(&ctx, &command).await,
                 "joinvc"  =>  joinvc::run(&ctx, &command).await,
                 "leavevc" => leavevc::run(&ctx, &command).await,
+                "playvc"  =>  playvc::run(&ctx, &command).await,
 
                 _ => if let Err(e) = command.create_interaction_response(
                     &ctx.http,
@@ -57,6 +58,7 @@ impl EventHandler for Handler {
                 commands.create_application_command(   ping::register)
                         .create_application_command( joinvc::register)
                         .create_application_command(leavevc::register)
+                        .create_application_command( playvc::register)
         }).await;
         // Command::delete_global_application_command(&ctx.http, serenity::model::id::CommandId()).await.expect("error");
 

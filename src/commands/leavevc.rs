@@ -6,7 +6,6 @@ use serenity::{
             InteractionResponseType,
             application_command::ApplicationCommandInteraction,
         },
-        prelude::ChannelType::Voice,
     },
 };
 use songbird;
