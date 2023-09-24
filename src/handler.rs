@@ -30,6 +30,7 @@ impl Handler {
                 "ping"    =>    ping::run(&ctx, &command).await,
                 "joinvc"  =>  joinvc::run(&ctx, &command).await,
                 "leavevc" => leavevc::run(&ctx, &command).await,
+                "hello"   => hello::run(&ctx, &command).await,
 
                 _ => if let Err(why) = command.create_interaction_response(
                     &ctx.http,
