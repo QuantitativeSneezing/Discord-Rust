@@ -47,6 +47,7 @@ async fn main() {
             GatewayIntents::non_privileged()
             | GatewayIntents::GUILD_PRESENCES
             | GatewayIntents::GUILD_MEMBERS
+            | GatewayIntents::GUILD_VOICE_STATES
         )
         .event_handler(Handler)
         .await

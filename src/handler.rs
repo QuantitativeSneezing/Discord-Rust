@@ -27,8 +27,9 @@ impl Handler {
             println!("{:?}", command);
 
             match command.data.name.as_str() {
-                "ping" => ping::run(&ctx, &command).await,
-                // ""     =>     ::run(&ctx, &command).await,
+                "ping"    =>    ping::run(&ctx, &command).await,
+                "joinvc"  =>  joinvc::run(&ctx, &command).await,
+                "leavevc" => leavevc::run(&ctx, &command).await,
 
                 _ => if let Err(why) = command.create_interaction_response(
                     &ctx.http,
@@ -53,8 +54,9 @@ impl EventHandler for Handler {
         let global_commands = Command::set_global_application_commands(
             &ctx.http,
             |commands| {
-                commands.create_application_command(ping::register)
-                        // .create_application_command(    ::register)
+                commands.create_application_command(   ping::register)
+                        .create_application_command( joinvc::register)
+                        .create_application_command(leavevc::register)
         }).await;
         // Command::delete_global_application_command(&ctx.http, serenity::model::id::CommandId()).await.expect("error");
 
