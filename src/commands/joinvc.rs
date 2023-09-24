@@ -28,46 +28,69 @@ pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
         .expect("error: getting voice manager")
         .clone();
 
-    let handler_lock = match manager.get(guild_id) {
-        Some(handler) => handler,
-        None => {
-            if let Err(why) = command.create_interaction_response(
+    match manager.join(guild_id, voice_channel_id).await.1 {
+        Ok(_) =>
+            if let Err(e) = command.create_interaction_response(
                 &ctx,
                 |r| {
                     r.kind(InteractionResponseType::ChannelMessageWithSource)
-                     .interaction_response_data(|m| m.content("error: not in a voice channel"))
+                    .interaction_response_data(|m| m.content("joined voice channel"))
                 }
             ).await {
-                eprintln!("error: {}", why)
-            }
-
-            return ();
-        },
-    };
-
-    let mut handler = handler_lock.lock().await;
-
-    if let Err(e) = handler.join(voice_channel_id).await {
-        if let Err(why) = command.create_interaction_response(
-            &ctx,
-            |r| {
-                r.kind(InteractionResponseType::ChannelMessageWithSource)
-                 .interaction_response_data(|m| m.content("error: not in a voice channel"))
-            }
-        ).await {
-            eprintln!("error: {}", why)
-        }
-    } else {
-        if let Err(why) = command.create_interaction_response(
-            &ctx,
-            |r| {
-                r.kind(InteractionResponseType::ChannelMessageWithSource)
-                 .interaction_response_data(|m| m.content("error: joining voice channel"))
-            }
-        ).await {
-            eprintln!("error: {}", why)
-        }
+                eprintln!("error: {}", e)
+            },
+        Err(_) =>
+            if let Err(e) = command.create_interaction_response(
+                &ctx,
+                |r| {
+                    r.kind(InteractionResponseType::ChannelMessageWithSource)
+                    .interaction_response_data(|m| m.content("error: joining voice channel"))
+                }
+            ).await {
+                eprintln!("error: {}", e)
+            },
     }
+
+    // let handler_lock = match manager.get(guild_id) {
+    //     Some(handler) => handler,
+    //     None => {
+    //         if let Err(why) = command.create_interaction_response(
+    //             &ctx,
+    //             |r| {
+    //                 r.kind(InteractionResponseType::ChannelMessageWithSource)
+    //                  .interaction_response_data(|m| m.content("error: not in a voice channel"))
+    //             }
+    //         ).await {
+    //             eprintln!("error: {}", why)
+    //         }
+
+    //         return ();
+    //     },
+    // };
+
+    // let mut handler = handler_lock.lock().await;
+
+    // if let Err(e) = handler.join(voice_channel_id).await {
+    //     if let Err(why) = command.create_interaction_response(
+    //         &ctx,
+    //         |r| {
+    //             r.kind(InteractionResponseType::ChannelMessageWithSource)
+    //              .interaction_response_data(|m| m.content("error: not in a voice channel 2"))
+    //         }
+    //     ).await {
+    //         eprintln!("error: {}", why)
+    //     }
+    // } else {
+    //     if let Err(why) = command.create_interaction_response(
+    //         &ctx,
+    //         |r| {
+    //             r.kind(InteractionResponseType::ChannelMessageWithSource)
+    //              .interaction_response_data(|m| m.content("error: joining voice channel"))
+    //         }
+    //     ).await {
+    //         eprintln!("error: {}", why)
+    //     }
+    // }
 }
 
 pub fn register(command: &mut CreateApplicationCommand) -> &mut CreateApplicationCommand {
