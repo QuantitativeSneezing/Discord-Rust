@@ -1,3 +1,4 @@
+use rand::seq::SliceRandom;
 use serenity::{
     builder::CreateApplicationCommand,
     client::Context,
@@ -6,7 +7,6 @@ use serenity::{
         application_command::ApplicationCommandInteraction,
     },
 };
-use rand::seq::SliceRandom;
 
 pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
     let mut rng = rand::thread_rng();
