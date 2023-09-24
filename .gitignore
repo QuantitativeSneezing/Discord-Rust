@@ -19,4 +19,5 @@ Cargo.lock
 /target
 
 # Misc.
+.vscode/
 .env

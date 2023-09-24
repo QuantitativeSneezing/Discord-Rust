@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 dotenvy = { version = "0.15" }
+rand = { version = "0.8" }
 serenity = { version = "0.11", features = ["client", "gateway", "model", "native_tls_backend"], default-features = false }
 songbird = { version = "0.3", features = ["serenity-native", "yt-dlp"] }
 tokio = { version = "1", features = ["full"] }

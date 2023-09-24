@@ -31,6 +31,7 @@ impl Handler {
                 "joinvc"  =>  joinvc::run(&ctx, &command).await,
                 "leavevc" => leavevc::run(&ctx, &command).await,
                 "playvc"  =>  playvc::run(&ctx, &command).await,
+                "hello"   =>   hello::run(&ctx, &command).await,
 
                 _ => if let Err(e) = command.create_interaction_response(
                     &ctx.http,
