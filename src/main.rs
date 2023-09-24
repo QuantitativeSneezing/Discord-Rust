@@ -4,6 +4,7 @@
 
 use std::collections::HashSet;
 
+use dotenvy::dotenv_iter;
 use serenity::{
     client::Client,
     model::gateway::GatewayIntents,
@@ -17,7 +18,13 @@ use crate::handler::*;
 
 #[tokio::main]
 async fn main() {
-    let token = String::new();
+    let mut token = String::new();
+    for item in dotenv_iter().expect("error: opening .env") {
+        let (k, v) = item.expect("error: getting token");
+        if k == "TOKEN" {
+            token = v;
+        }
+    }
     let http = Http::new(&token);
     let (_owners, _bot_id) = match http.get_current_application_info().await {
         Ok(info) => {
@@ -31,6 +38,7 @@ async fn main() {
     let intents = GatewayIntents::non_privileged()
                 | GatewayIntents::GUILD_PRESENCES
                 | GatewayIntents::GUILD_MEMBERS
+                | GatewayIntents::GUILD_VOICE_STATES
                 | GatewayIntents::MESSAGE_CONTENT
     ;
     let mut client = Client::builder(&token, intents)
