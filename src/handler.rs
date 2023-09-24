@@ -32,7 +32,7 @@ impl Handler {
                 "leavevc" => leavevc::run(&ctx, &command).await,
                 "hello"   => hello::run(&ctx, &command).await,
 
-                _ => if let Err(why) = command.create_interaction_response(
+                _ => if let Err(e) = command.create_interaction_response(
                     &ctx.http,
                     |response| {
                         response
@@ -40,7 +40,7 @@ impl Handler {
                             .interaction_response_data(|message| message.content("error!"))
                     }
                 ).await {
-                    eprintln!("error: {}", why)
+                    eprintln!("error: {}", e)
                 }
             }
         }

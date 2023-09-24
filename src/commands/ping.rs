@@ -8,14 +8,14 @@ use serenity::{
 };
 
 pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
-    if let Err(why) = command.create_interaction_response(
+    if let Err(e) = command.create_interaction_response(
         &ctx,
         |r| {
             r.kind(InteractionResponseType::ChannelMessageWithSource)
              .interaction_response_data(|m| m.content("pong"))
         }
     ).await {
-        eprintln!("error: {}", why)
+        eprintln!("error: {}", e)
     }
 }
 

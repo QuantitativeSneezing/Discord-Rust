@@ -10,6 +10,7 @@ use serenity::{
     model::gateway::GatewayIntents,
     http::Http,
 };
+use songbird::SerenityInit;
 
 mod commands;
 mod handler;
@@ -43,12 +44,13 @@ async fn main() {
     ;
     let mut client = Client::builder(&token, intents)
         .event_handler(Handler)
+        .register_songbird()
         .await
         .expect("error");
 
     // Start listening for events by starting a single shard
-    if let Err(why) = client.start().await {
-        eprintln!("error: {:?}", why);
+    if let Err(e) = client.start().await {
+        eprintln!("error: {:?}", e);
         println!("creating client with less privileges"); // Slash commands only
         Client::builder(
             &token,
@@ -58,6 +60,7 @@ async fn main() {
             | GatewayIntents::GUILD_VOICE_STATES
         )
         .event_handler(Handler)
+        .register_songbird()
         .await
         .expect("error")
         .start()
