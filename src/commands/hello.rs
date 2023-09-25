@@ -2,7 +2,7 @@
 //     Rng,
 //     thread_rng,
 //     seq::SliceRandom,
-    
+
 // };
 use serenity::{
     builder::CreateApplicationCommand,
@@ -15,7 +15,7 @@ use serenity::{
 
 pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
     // let mut rng = thread_rng();
-    let mut test_var = vec!["HELLO!!!!!!!!!!", "WASSUP", "HI", "GREETINGS", "HAI DOMO"];
+    let test_var = vec!["HELLO!!!!!!!!!!", "WASSUP", "HI", "GREETINGS", "HAI DOMO"];
     // test_var.shuffle(&mut rng);
     if let Err(e) = command.create_interaction_response(
         &ctx,
