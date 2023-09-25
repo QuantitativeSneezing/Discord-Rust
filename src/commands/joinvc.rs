@@ -28,8 +28,12 @@ pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
         .expect("error: getting voice manager")
         .clone();
 
-    match manager.join(guild_id, voice_channel_id).await.1 {
-        Ok(_) =>
+    let (handler_lock, conn_result) = manager.join(guild_id, voice_channel_id).await;
+
+    match conn_result {
+        Ok(_) => {
+            let mut _handler = handler_lock.lock().await;
+
             if let Err(e) = command.create_interaction_response(
                 &ctx,
                 |r| {
@@ -38,7 +42,9 @@ pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
                 }
             ).await {
                 eprintln!("error: {}", e)
-            },
+            }
+        },
+
         Err(_) =>
             if let Err(e) = command.create_interaction_response(
                 &ctx,

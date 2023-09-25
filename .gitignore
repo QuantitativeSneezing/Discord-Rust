@@ -21,3 +21,7 @@ Cargo.lock
 # Misc.
 .vscode/
 .env
+stt_model/
+*.dll
+*.lib
+*.h

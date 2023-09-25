@@ -10,10 +10,16 @@ use serenity::{
     model::gateway::GatewayIntents,
     http::Http,
 };
-use songbird::SerenityInit;
+use songbird::{
+    SerenityInit,
+    Config,
+    driver::DecodeMode,
+};
 
 mod commands;
 mod handler;
+mod receiver;
+mod stt_model;
 
 use crate::handler::*;
 
@@ -41,10 +47,13 @@ async fn main() {
                 | GatewayIntents::GUILD_MEMBERS
                 | GatewayIntents::GUILD_VOICE_STATES
                 | GatewayIntents::MESSAGE_CONTENT
-    ;
+                ;
+    // decode all incoming voice packets
+    let songbird_config = Config::default()
+        .decode_mode(DecodeMode::Decode);
     let mut client = Client::builder(&token, intents)
         .event_handler(Handler)
-        .register_songbird()
+        .register_songbird_from_config(songbird_config)
         .await
         .expect("error");
 
@@ -60,7 +69,9 @@ async fn main() {
             | GatewayIntents::GUILD_VOICE_STATES
         )
         .event_handler(Handler)
-        .register_songbird()
+        .register_songbird_from_config(
+            Config::default().decode_mode(DecodeMode::Decode)
+        )
         .await
         .expect("error")
         .start()
