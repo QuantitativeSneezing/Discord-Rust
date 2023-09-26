@@ -25,3 +25,5 @@ stt_model/
 *.dll
 *.lib
 *.h
+# personal build file
+build.rs
