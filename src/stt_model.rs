@@ -4,8 +4,8 @@ use vosk::{
 };
 
 pub struct SttModel {
-    model: Model,
-    recognizer: Recognizer,
+    model: Option<Model>,
+    recognizer: Option<Recognizer>,
 }
 
 impl SttModel {
@@ -20,18 +20,30 @@ impl SttModel {
         recognizer.set_partial_words(true);
 
         let new_self = Self {
-            model: model,
-            recognizer: recognizer,
+            model: Some(model),
+            recognizer: Some(recognizer),
         };
 
         new_self
     }
 
-    pub fn model(&self) -> &Model {
-        &self.model
+    pub fn model(&self) -> Option<&Model> {
+        self.model.as_ref()
     }
 
-    pub fn recognizer(&mut self) -> &mut Recognizer {
-        &mut self.recognizer
+    pub fn recognizer_mut(&mut self) -> Option<&mut Recognizer> {
+        self.recognizer.as_mut()
     }
+    
+    // pub fn recognize(&self, samples: &Vec<i16>) {
+    //     // let model = stt.model().expect("error: getting voice recognition model");
+    //     let recognizer = self.recognizer.as_mut().expect("error: getting voice recognizer");
+    
+    //     for sample in samples.chunks(100) {
+    //         recognizer.accept_waveform(sample);
+    //         println!("error: partial voice recognition {:#?}", recognizer.partial_result());
+    //     }
+    
+    //     println!("voice recognition: {:#?}", recognizer.final_result().multiple().expect("error: voice recognition"));
+    // }
 }

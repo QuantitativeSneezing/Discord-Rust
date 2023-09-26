@@ -70,7 +70,7 @@ pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
             &ctx,
             |r| {
                 r.kind(InteractionResponseType::ChannelMessageWithSource)
-                .interaction_response_data(|m| m.content("enabling Speech-To-Text"))
+                .interaction_response_data(|m| m.content("enabling voice recognition (Speech-To-Text)"))
             }
         ).await {
             eprintln!("error: {}", e)
@@ -80,7 +80,7 @@ pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
             &ctx,
             |r| {
                 r.kind(InteractionResponseType::ChannelMessageWithSource)
-                .interaction_response_data(|m| m.content("error: enabling Speech-To-Text"))
+                .interaction_response_data(|m| m.content("error: enabling voice recognition"))
             }
         ).await {
             eprintln!("error: {}", e)
@@ -91,12 +91,12 @@ pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
 pub fn register(command: &mut CreateApplicationCommand) -> &mut CreateApplicationCommand {
     command
         .name("stt")
-        .description("Speech-To-Text")
+        .description("Voice recognition/Speech-To-Text")
         .create_option(
             |opt|
                 opt
                     .name("language")
-                    .description("Speech-To-Text recognition language")
+                    .description("Speech-To-Text voice recognition language")
                     .kind(CommandOptionType::String)
                     .required(false)
         )
