@@ -16,7 +16,7 @@ pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
     // let cache_http= ctx.http;
     let dm = author
         .user
-        .direct_message(&ctx, |m| m.content(format!("hello, \"{}\"", author_name)))
+        .direct_message(&ctx, |m| m.content(format!(r#"hello, "{}""#, author_name)))
         .await;
     match dm {
         Ok(_) => {
