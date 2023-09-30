@@ -41,16 +41,16 @@ impl SttModel {
     pub fn recognizer_mut(&mut self) -> Option<&mut Recognizer> {
         self.recognizer.as_mut()
     }
-    
+
     // pub fn recognize(&self, samples: &Vec<i16>) {
     //     // let model = stt.model().expect("error: getting voice recognition model");
     //     let recognizer = self.recognizer.as_mut().expect("error: getting voice recognizer");
-    
+
     //     for sample in samples.chunks(100) {
     //         recognizer.accept_waveform(sample);
     //         println!("error: partial voice recognition {:#?}", recognizer.partial_result());
     //     }
-    
+
     //     println!("voice recognition: {:#?}", recognizer.final_result().multiple().expect("error: voice recognition"));
     // }
 }
