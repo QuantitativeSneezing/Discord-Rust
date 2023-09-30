@@ -27,6 +27,13 @@ impl SttModel {
         new_self
     }
 
+    pub fn empty() -> Self {
+        Self {
+            model: None,
+            recognizer: None,
+        }
+    }
+
     pub fn model(&self) -> Option<&Model> {
         self.model.as_ref()
     }

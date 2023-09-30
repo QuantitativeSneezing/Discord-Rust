@@ -1,3 +1,5 @@
+use std::cell::RefCell;
+
 use serenity::async_trait;
 use songbird::{
     Event,
@@ -9,13 +11,19 @@ use songbird::{
     },
 };
 
-pub struct Receiver;
+use crate::stt_model::SttModel;
+
+pub struct Receiver {
+    // stt_model: RefCell<SttModel>
+}
 
 impl Receiver {
     pub fn new() -> Self {
         // manage state
         // e.g. buffer of audio packet bytes to later store in intervals
-        Self {}
+        Self {
+            // stt_model: SttModel::empty()
+        }
     }
 }
 
