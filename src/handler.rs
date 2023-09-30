@@ -33,7 +33,7 @@ impl Handler {
                 "playvc"  =>  playvc::run(&ctx, &command).await,
                 "hello"   =>   hello::run(&ctx, &command).await,
                 "stt"     =>     stt::run(&ctx, &command).await,
-                "dm"      =>     dm::run(&ctx, &command).await,
+                "dm"      =>      dm::run(&ctx, &command).await,
 
                 _ => if let Err(e) = command.create_interaction_response(
                     &ctx.http,
@@ -64,7 +64,7 @@ impl EventHandler for Handler {
                         .create_application_command( playvc::register)
                         .create_application_command(  hello::register)
                         .create_application_command(    stt::register)
-                        .create_application_command(    dm::register)
+                        .create_application_command(     dm::register)
 
         }).await;
         // Command::delete_global_application_command(&ctx.http, serenity::model::id::CommandId()).await.expect("error");
