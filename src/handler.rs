@@ -27,10 +27,10 @@ impl Handler {
                 "ping" => ping::run(&ctx, &command).await,
                 "joinvc" => joinvc::run(&ctx, &command).await,
                 "leavevc" => leavevc::run(&ctx, &command).await,
-                "playvc" => playvc::run(&ctx, &command).await,
-                "hello" => hello::run(&ctx, &command).await,
-                "stt" => stt::run(&ctx, &command).await,
-                "dm" => dm::run(&ctx, &command).await,
+                "playvc"  =>  playvc::run(&ctx, &command).await,
+                "hello"   =>   hello::run(&ctx, &command).await,
+                "stt"     =>     stt::run(&ctx, &command).await,
+                "dm"      =>      dm::run(&ctx, &command).await,
 
                 _ => {
                     if let Err(e) = command
@@ -61,17 +61,18 @@ impl EventHandler for Handler {
     async fn ready(&self, ctx: Context, ready: Ready) {
         println!("connected as {}", ready.user.name);
 
-        let global_commands = Command::set_global_application_commands(&ctx.http, |commands| {
-            commands
-                .create_application_command(ping::register)
-                .create_application_command(joinvc::register)
-                .create_application_command(leavevc::register)
-                .create_application_command(playvc::register)
-                .create_application_command(hello::register)
-                .create_application_command(stt::register)
-                .create_application_command(dm::register)
-        })
-        .await;
+        let global_commands = Command::set_global_application_commands(
+            &ctx.http,
+            |commands| {
+                commands.create_application_command(   ping::register)
+                        .create_application_command( joinvc::register)
+                        .create_application_command(leavevc::register)
+                        .create_application_command( playvc::register)
+                        .create_application_command(  hello::register)
+                        .create_application_command(    stt::register)
+                        .create_application_command(     dm::register)
+
+        }).await;
         // Command::delete_global_application_command(&ctx.http, serenity::model::id::CommandId()).await.expect("error");
 
         println!(
