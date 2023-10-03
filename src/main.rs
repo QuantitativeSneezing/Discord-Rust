@@ -21,7 +21,13 @@ mod handler;
 mod receiver;
 mod stt_model;
 
-use crate::handler::*;
+use crate::{
+    handler::*,
+    stt_model::RECOGNIZER,
+};
+
+#[macro_use]
+extern crate lazy_static;
 
 #[tokio::main]
 async fn main() {
@@ -48,6 +54,12 @@ async fn main() {
                 | GatewayIntents::GUILD_VOICE_STATES
                 | GatewayIntents::MESSAGE_CONTENT
                 ;
+    {
+        let mut recognizer = RECOGNIZER.lock().expect("error: acquiring voice recognizer lock");
+        recognizer.set_max_alternatives(10);
+        recognizer.set_words(true);
+        recognizer.set_partial_words(true);
+    }
     // decode all incoming voice packets
     let songbird_config = Config::default()
         .decode_mode(DecodeMode::Decode);

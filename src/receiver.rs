@@ -1,5 +1,3 @@
-use std::cell::RefCell;
-
 use serenity::async_trait;
 use songbird::{
     Event,
@@ -11,19 +9,15 @@ use songbird::{
     },
 };
 
-use crate::stt_model::SttModel;
+use crate::stt_model::*;
 
-pub struct Receiver {
-    // stt_model: RefCell<SttModel>
-}
+pub struct Receiver;
 
 impl Receiver {
     pub fn new() -> Self {
         // manage state
         // e.g. buffer of audio packet bytes to later store in intervals
-        Self {
-            // stt_model: SttModel::empty()
-        }
+        Self {}
     }
 }
 
@@ -74,14 +68,17 @@ impl VoiceEventHandler for Receiver {
                 // each received audio packet
                 // decoded data
                 if let Some(audio) = data.audio {
-                    println!("audio packet first 5 samples: {:?}", audio.get(..5.min(audio.len())));
-                    println!(
-                        "audio packet sequence {:05} has {:04} bytes (decompressed from {}), SSRC {}",
-                        data.packet.sequence.0,
-                        audio.len() * std::mem::size_of::<i16>(),
-                        data.packet.payload.len(),
-                        data.packet.ssrc,
-                    );
+                    // println!("audio packet first 5 samples: {:?}", audio.get(..5.min(audio.len())));
+                    // println!(
+                    //     "audio packet sequence {:05} has {:04} bytes (decompressed from {}), SSRC {}",
+                    //     data.packet.sequence.0,
+                    //     audio.len() * std::mem::size_of::<i16>(),
+                    //     data.packet.payload.len(),
+                    //     data.packet.ssrc,
+                    // );
+
+                    push_samples(audio);
+                    recognize(audio);
                 } else {
                     println!("RTP packet has no audio, driver may not be configured for decoding");
                 }

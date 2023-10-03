@@ -7,10 +7,7 @@ use serenity::{
             application_command::ApplicationCommandInteraction,
         },
         prelude::{
-            application_command::{
-                CommandDataOption,
-                CommandDataOptionValue,
-            },
+            application_command::CommandDataOptionValue,
             command::CommandOptionType,
         },
     },
@@ -23,13 +20,11 @@ use songbird::{
 use crate::receiver::Receiver;
 
 pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
-    // let cmd_dat_opts: &[CommandDataOption] = &command.data.options;
-    // let cmd_dat_val = cmd_dat_opts.get(0).expect("error: getting language").resolved.as_ref().expect("error: getting language");
-    // let _opt = if let CommandDataOptionValue::String(lang) = cmd_dat_val {
-    //     lang
-    // } else {
-    //     return ();
-    // };
+    if let Some(lang) = command.data.options.get(0) {
+        if let CommandDataOptionValue::String(lang) = lang.resolved.as_ref().expect("error: getting voice recognition language") {
+            println!("voice recognition language: {lang}")
+        }
+    }
 
     let guild_id = command.guild_id.expect("error: getting guild ID");
 
