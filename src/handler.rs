@@ -4,15 +4,12 @@ use serenity::{
     model::{
         application::{
             command::Command,
-            interaction::{
-                Interaction,
-                InteractionResponseType,
-            },
+            interaction::{Interaction, InteractionResponseType},
         },
-        gateway::{
-            Activity,
-            Ready,
-        },
+        gateway::{Activity, Ready},
+        // id,
+        prelude::Message,
+        // user::CurrentUser,
     },
     prelude::*,
 };
@@ -27,23 +24,25 @@ impl Handler {
             println!("{:?}", command);
 
             match command.data.name.as_str() {
-                "ping"    =>    ping::run(&ctx, &command).await,
-                "joinvc"  =>  joinvc::run(&ctx, &command).await,
+                "ping" => ping::run(&ctx, &command).await,
+                "joinvc" => joinvc::run(&ctx, &command).await,
                 "leavevc" => leavevc::run(&ctx, &command).await,
                 "playvc"  =>  playvc::run(&ctx, &command).await,
                 "hello"   =>   hello::run(&ctx, &command).await,
                 "stt"     =>     stt::run(&ctx, &command).await,
                 "dm"      =>      dm::run(&ctx, &command).await,
 
-                _ => if let Err(e) = command.create_interaction_response(
-                    &ctx.http,
-                    |response| {
-                        response
-                            .kind(InteractionResponseType::ChannelMessageWithSource)
-                            .interaction_response_data(|message| message.content("error!"))
+                _ => {
+                    if let Err(e) = command
+                        .create_interaction_response(&ctx.http, |response| {
+                            response
+                                .kind(InteractionResponseType::ChannelMessageWithSource)
+                                .interaction_response_data(|message| message.content("error!"))
+                        })
+                        .await
+                    {
+                        eprintln!("error: {}", e)
                     }
-                ).await {
-                    eprintln!("error: {}", e)
                 }
             }
         }
@@ -52,6 +51,13 @@ impl Handler {
 
 #[async_trait]
 impl EventHandler for Handler {
+    async fn message(&self, context: Context, msg: Message) {
+
+        match msg.author.id {
+            serenity::model::id::UserId(1155419145123414067) => print!("I said that lol"),
+            _ => respondtodm::run(context, msg).await,
+        }
+    }
     async fn ready(&self, ctx: Context, ready: Ready) {
         println!("connected as {}", ready.user.name);
 
@@ -69,7 +75,10 @@ impl EventHandler for Handler {
         }).await;
         // Command::delete_global_application_command(&ctx.http, serenity::model::id::CommandId()).await.expect("error");
 
-        println!("available commands\n{:#?}", Vec::from_iter(global_commands.unwrap().iter().map(|c| &(c.name)))); // Available global slash commands
+        println!(
+            "available commands\n{:#?}",
+            Vec::from_iter(global_commands.unwrap().iter().map(|c| &(c.name)))
+        ); // Available global slash commands
 
         ctx.set_activity(Activity::playing("being a bot")).await
     }
