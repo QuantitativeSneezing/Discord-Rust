@@ -22,6 +22,7 @@ Cargo.lock
 .vscode/
 .env
 stt_model/
+stt_model_smol/
 *.dll
 *.lib
 *.h

@@ -78,7 +78,6 @@ impl VoiceEventHandler for Receiver {
                     // );
 
                     push_samples(audio);
-                    recognize(audio);
                 } else {
                     println!("RTP packet has no audio, driver may not be configured for decoding");
                 }
