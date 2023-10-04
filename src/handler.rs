@@ -4,12 +4,16 @@ use serenity::{
     model::{
         application::{
             command::Command,
-            interaction::{Interaction, InteractionResponseType},
+            interaction::{
+                Interaction,
+                InteractionResponseType,
+            },
         },
-        gateway::{Activity, Ready},
-        // id,
+        gateway::{
+            Activity,
+            Ready,
+        },
         prelude::Message,
-        // user::CurrentUser,
     },
     prelude::*,
 };
@@ -24,8 +28,8 @@ impl Handler {
             println!("{:?}", command);
 
             match command.data.name.as_str() {
-                "ping" => ping::run(&ctx, &command).await,
-                "joinvc" => joinvc::run(&ctx, &command).await,
+                "ping"    =>    ping::run(&ctx, &command).await,
+                "joinvc"  =>  joinvc::run(&ctx, &command).await,
                 "leavevc" => leavevc::run(&ctx, &command).await,
                 "playvc"  =>  playvc::run(&ctx, &command).await,
                 "hello"   =>   hello::run(&ctx, &command).await,
@@ -51,13 +55,6 @@ impl Handler {
 
 #[async_trait]
 impl EventHandler for Handler {
-    async fn message(&self, context: Context, msg: Message) {
-
-        match msg.author.id {
-            serenity::model::id::UserId(1155419145123414067) => print!("I said that lol"),
-            _ => respondtodm::run(context, msg).await,
-        }
-    }
     async fn ready(&self, ctx: Context, ready: Ready) {
         println!("connected as {}", ready.user.name);
 
@@ -85,5 +82,12 @@ impl EventHandler for Handler {
 
     async fn interaction_create(&self, ctx: Context, interaction: Interaction) {
         self.interaction_create(ctx, interaction).await
+    }
+
+    async fn message(&self, context: Context, msg: Message) {
+        match msg.author.id {
+            serenity::model::id::UserId(1155419145123414067) => print!("I said that lol"),
+            _ => respondtodm::run(context, msg).await,
+        }
     }
 }
