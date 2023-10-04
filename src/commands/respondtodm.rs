@@ -1,7 +1,7 @@
 use serenity::{
     // builder::CreateApplicationCommand,
     client::Context,
-    model::{prelude::Channel, prelude::Message},
+    model::prelude::Message,
     utils::MessageBuilder,
 };
 
