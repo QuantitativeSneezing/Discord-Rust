@@ -6,11 +6,11 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-cpal = { version = "0.15" }
 dotenvy = { version = "0.15" }
 lazy_static = { version = "1.4" }
 openai_api_rust = "0.1"
 rand = { version = "0.8", features = ["std_rng"]}
+rodio = { version = "0.17" }
 serenity = { version = "0.11", features = ["client", "gateway", "model", "native_tls_backend"], default-features = false }
 songbird = { version = "0.3", features = ["serenity-native", "yt-dlp"] }
 tokio = { version = "1", features = ["full"] }
