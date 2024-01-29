@@ -100,5 +100,5 @@ pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
 }
 
 pub fn register(command: &mut CreateApplicationCommand) -> &mut CreateApplicationCommand {
-    command.name("joinvc").description("Join VC")
+    command.name("joinanddm").description("Joins and DMs you")
 }
