@@ -14,7 +14,9 @@ use songbird;
 pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
     let guild_id = command.guild_id.expect("error: getting guild ID");
     let guild = ctx.http.get_guild(*guild_id.as_u64()).await.expect("error: getting guild");
-
+    let author = command.member.clone().expect("RIP NO AUTHOR LOL");
+    let author_name = author.display_name();
+    // println!(author_name)
     // let channel_id = command.channel_id;
     let channels = guild.channels(ctx).await.expect("error: getting channels");
     let voice_channel = channels
