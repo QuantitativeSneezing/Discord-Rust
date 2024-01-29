@@ -22,16 +22,6 @@ pub async fn run(ctx: Context, msg: Message) {
                     println!("It's a guild channel named {}!", guild_channel.name);
                 }
                 None => {
-                    // if msg.content.contains("Jason"){
-                    //     let response = MessageBuilder::new()
-                    //     .push("I Love Jason")
-                    //     .build();
-                    // }
-                    // if msg.content.contains("jason"){
-                    //     let response = MessageBuilder::new()
-                    //     .push("I Love Jason")
-                    //     .build();
-                    // }
                     let response = MessageBuilder::new()
                         .push(format!(r#" "{}" "#, msg.content))
                         .push("TODO: integrate ChatGPT responses to your inputs")
