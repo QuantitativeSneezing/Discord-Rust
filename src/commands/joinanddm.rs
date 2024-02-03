@@ -24,7 +24,26 @@ pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
         .find(|ch| ch.kind == Voice)
         .expect("error: getting voice channel");
     let voice_channel_id = voice_channel.id;
-
+    let dm = author
+    .user
+    .direct_message(&ctx, |m| m.content(format!("Hello, {}, I love you", author_name)))
+    .await;
+    match dm {
+        Ok(_) => {
+            if let Err(e) = command
+                .create_interaction_response(&ctx, |r| {
+                    r.kind(InteractionResponseType::ChannelMessageWithSource)
+                        .interaction_response_data(|m| m.content("dm sent"))
+                })
+                .await
+            {
+                eprintln!("error: {}", e)
+            }
+        }
+        Err(why) => {
+            println!("Err sending help: {:?}", why);
+        }
+    }
     let manager = songbird::get(ctx)
         .await
         .expect("error: getting voice manager")
@@ -59,46 +78,6 @@ pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
             },
     }
 
-    // let handler_lock = match manager.get(guild_id) {
-    //     Some(handler) => handler,
-    //     None => {
-    //         if let Err(why) = command.create_interaction_response(
-    //             &ctx,
-    //             |r| {
-    //                 r.kind(InteractionResponseType::ChannelMessageWithSource)
-    //                  .interaction_response_data(|m| m.content("error: not in a voice channel"))
-    //             }
-    //         ).await {
-    //             eprintln!("error: {}", why)
-    //         }
-
-    //         return ();
-    //     },
-    // };
-
-    // let mut handler = handler_lock.lock().await;
-
-    // if let Err(e) = handler.join(voice_channel_id).await {
-    //     if let Err(why) = command.create_interaction_response(
-    //         &ctx,
-    //         |r| {
-    //             r.kind(InteractionResponseType::ChannelMessageWithSource)
-    //              .interaction_response_data(|m| m.content("error: not in a voice channel 2"))
-    //         }
-    //     ).await {
-    //         eprintln!("error: {}", why)
-    //     }
-    // } else {
-    //     if let Err(why) = command.create_interaction_response(
-    //         &ctx,
-    //         |r| {
-    //             r.kind(InteractionResponseType::ChannelMessageWithSource)
-    //              .interaction_response_data(|m| m.content("error: joining voice channel"))
-    //         }
-    //     ).await {
-    //         eprintln!("error: {}", why)
-    //     }
-    // }
 }
 
 pub fn register(command: &mut CreateApplicationCommand) -> &mut CreateApplicationCommand {
