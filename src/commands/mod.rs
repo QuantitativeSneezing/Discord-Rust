@@ -6,4 +6,4 @@ pub mod hello;
 pub mod stt;
 pub mod dm;
 pub mod respondtodm;
-pub mod joinchannelanddm;
+pub mod joinanddm;

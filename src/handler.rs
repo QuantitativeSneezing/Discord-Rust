@@ -35,6 +35,7 @@ impl Handler {
                 "hello"   =>   hello::run(&ctx, &command).await,
                 "stt"     =>     stt::run(&ctx, &command).await,
                 "dm"      =>      dm::run(&ctx, &command).await,
+                "joinanddm" => joinanddm::run(&ctx, &command).await,
 
                 _ => {
                     if let Err(e) = command
@@ -68,6 +69,7 @@ impl EventHandler for Handler {
                         .create_application_command(  hello::register)
                         .create_application_command(    stt::register)
                         .create_application_command(     dm::register)
+                        .create_application_command(joinanddm::register)
 
         }).await;
         // Command::delete_global_application_command(&ctx.http, serenity::model::id::CommandId()).await.expect("error");
