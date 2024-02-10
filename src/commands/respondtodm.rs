@@ -23,8 +23,8 @@ pub async fn run(ctx: Context, msg: Message) {
                 }
                 None => {
                     let response = MessageBuilder::new()
-                        .push(format!(r#" "{}" "#, msg.content))
-                        .push("TODO: integrate ChatGPT responses to your inputs")
+                        .push(format!(r#"you said "{}" "#, msg.content))
+                        .push("")
                         .build();
 
                     if let Err(why) = msg.channel_id.say(&ctx.http, &response).await {
