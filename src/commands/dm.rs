@@ -5,7 +5,6 @@ use serenity::{
         application::interaction::{
             application_command::ApplicationCommandInteraction, InteractionResponseType,
         },
-        prelude::Channel,
     },
 };
 
