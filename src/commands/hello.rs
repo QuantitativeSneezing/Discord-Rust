@@ -14,10 +14,7 @@ use serenity::{
 };
 
 pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
-    // let mut rng = thread_rng();
     let test_var = vec!["HELLO!!!!!!!!!!", "WASSUP", "HI", "GREETINGS", "HAI DOMO"];
-    // let mut rng = rand::thread_rng();
-    // rng.gen::<i64>()
     let message= test_var[0];
     if let Err(e) = command.create_interaction_response(
         &ctx,
