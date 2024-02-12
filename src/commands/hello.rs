@@ -1,9 +1,5 @@
-use rand::{
-    // Rng,
-    // seq::SliceRandom,
-    rngs::StdRng
-};
-// use std::i8::rem_euclid
+// use rand::{
+// };
 use serenity::{
     builder::CreateApplicationCommand,
     client::Context,
