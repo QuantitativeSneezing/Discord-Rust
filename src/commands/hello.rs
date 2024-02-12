@@ -12,7 +12,7 @@ use serenity::{
 pub async fn run(ctx: &Context, command: &ApplicationCommandInteraction) {
     let possible_greetings = vec!["HELLO!!!!!!!!!!", "WASSUP", "HI", "GREETINGS", "HAI DOMO"];
     let mut random = rand::random::<i8>();
-    if random < -1 {
+    if random < 0 {
         random = random * -1;
     }
     random= random % 5;
