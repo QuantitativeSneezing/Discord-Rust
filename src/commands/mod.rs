@@ -7,3 +7,4 @@ pub mod stt;
 pub mod dm;
 pub mod respondtodm;
 pub mod joinanddm;
+pub mod diceroll;
