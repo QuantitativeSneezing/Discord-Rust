@@ -7,15 +7,6 @@ use serenity::{
 
 pub async fn run(ctx: Context, msg: Message) {
     if msg.content.len() > 0 {
-
-        // let channel = match msg.channel_id.to_channel(&ctx).await {
-        //     Ok(channel) => channel,
-        //     Err(why) => {
-        //         println!("Error getting channel: {:?}", why);
-
-        //         return;
-        //     }
-        // };
         if let Ok(channel_info) = msg.channel(&ctx).await {
             match channel_info.guild() {
                 Some(guild_channel) => {
@@ -24,7 +15,7 @@ pub async fn run(ctx: Context, msg: Message) {
                 None => {
                     let response = MessageBuilder::new()
                         .push(format!(r#"you said "{}" "#, msg.content))
-                        .push("")
+                        // .push("")
                         .build();
 
                     if let Err(why) = msg.channel_id.say(&ctx.http, &response).await {
