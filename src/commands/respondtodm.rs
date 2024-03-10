@@ -10,7 +10,7 @@ pub async fn run(ctx: Context, msg: Message) {
         if let Ok(channel_info) = msg.channel(&ctx).await {
             match channel_info.guild() {
                 Some(guild_channel) => {
-                    println!("It's a guild channel named {}!", guild_channel.name);
+                    // println!("It's a guild channel named {}!", guild_channel.name);
                 }
                 None => {
                     let response = MessageBuilder::new()

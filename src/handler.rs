@@ -90,7 +90,7 @@ impl EventHandler for Handler {
 
     async fn message(&self, context: Context, msg: Message) {
         match msg.author.id {
-            serenity::model::id::UserId(1155419145123414067) => print!("I said that lol"),
+            serenity::model::id::UserId(1155419145123414067) => print!(""),
             _ => respondtodm::run(context, msg).await,
         }
     }
